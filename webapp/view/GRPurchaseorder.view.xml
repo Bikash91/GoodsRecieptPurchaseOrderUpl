@@ -1,0 +1,154 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:ci="com.sap.upl.GRWRTPO.controller" controllerName="com.sap.upl.GRWRTPO.controller.GRPurchaseorder"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="{i18n>title}" id="goodsReciept" busy="{settingsModel>/busy}" showHeader="false">
+		<!--<headerContent>
+			<ToggleButton text="{i18n>language}" type="Emphasized" tooltip="{i18n>changeLan}" enabled="true" pressed="true" press="onChangeLanguage"/>
+		</headerContent>-->
+		<content>
+			<VBox width="100%">
+				<f:SimpleForm id="idPurchase" editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12"
+					adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+					singleContainerFullSize="false">
+					<f:content>
+						<Label text="{i18n>poOrder}" design="Bold" required="true"/>
+						<Input maxLength="10" required="true" id="idPo" name="PONumber" value="{goodsRecieptModel>/EBELN}"
+							editable="{settingsModel>/editablePOData}" change="onPoFocus" placeholder="{i18n>poOrder}">
+							<!--<layoutData>
+								<l:GridData span="XL3 L3 M4 S10"/>
+							</layoutData>-->
+						</Input>
+						<!--<Button icon="sap-icon://search" press="onClickPoData" tooltip="{i18n>search}">-->
+						<!--	<layoutData>-->
+						<!--		<l:GridData span="XL1 L1 M1 S2"/>-->
+						<!--	</layoutData>-->
+						<!--</Button>-->
+					</f:content>
+				</f:SimpleForm>
+			</VBox>
+			<VBox visible="{settingsModel>/visiblePoData}">
+				<f:SimpleForm id="idItem" editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12"
+					adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+					singleContainerFullSize="false">
+					<f:content>
+						<Label text="{i18n>delNote}" design="Bold" required="true"/>
+						<TextArea id="idDelNote" liveChange="addingDelNote" name="{i18n>delNote}" value="{goodsRecieptModel>/DELIERYNOTE}"
+							placeholder="{i18n>delNote}" required="true"/>
+						<Label text="{i18n>poDate}" design="Bold" required="true"/>
+						<DatePicker id="postingDate"
+							value="{path:'goodsRecieptModel>/POSTINGDATE', type:'sap.ui.model.type.Date', formatOptions: { style: 'short'}}" displayFormat="dd.MM.yyyy"
+							valueFormat="dd.MM.yyyy" required="true" enabled="false"/>
+						<Label text="{i18n>gs1}" design="Bold"/>
+						<Input placeholder="{i18n>gs1}" visible="{settingsModel>/GS1Visible}" value="{settingsModel>/GS1Value}" id="gs1" name="GS1"
+							change="onCheckField"/>
+						<Label text="{i18n>itemCode}" design="Bold" required="true"/>
+						<Input id="materialCode" name="MatNo" maxLength="18" required="true" value="{goodsRecieptModel>/MATNR}" placeholder="{i18n>itemCode}"
+							change="onCheckField" editable="{settingsModel>/gsPropertyenable}"></Input>
+						<Label text="{i18n>itemDesc}" design="Bold"/>
+						<Input editable="false" value="{goodsRecieptModel>/MAKTX}" maxLength="40" placeholder="{i18n>itemDesc}"></Input>
+						<Label text="{i18n>itemNo}" design="Bold" required="true"/>
+						<Input value="{goodsRecieptModel>/EBELP}" name="ItemNo" maxLength="5" change="onCheckField" editable="false" placeholder="{i18n>itemNo}"
+							required="true"></Input>
+						<Label text="{i18n>batch}" design="Bold" required="true"/>
+						<Input value="{goodsRecieptModel>/BATCH}" required="true" maxLength="10" change="onCheckField" name="Batch" id="batch"
+							placeholder="{i18n>batch}" visible="{settingsModel>/showBatch}" editable="{settingsModel>/gsPropertyenable}"></Input>
+						<Label text="{i18n>plant}" design="Bold" required="true"/>
+						<Input visible="false" value="{goodsRecieptModel>/WERKS}" maxLength="4" id="plant" change="onCheckField" required="true" name="plant"
+							placeholder="{i18n>plant}"></Input>
+						<Label text="{i18n>quantity}" design="Bold" required="true"/>
+						<Input maxLength="13" type="Number" value="{goodsRecieptModel>/MENGE}" required="true" placeholder="{i18n>quantity}" name="Quantity"
+							id="quant" change="onCheckField" editable="{settingsModel>/gsPropertyenable}"></Input>
+						<Label text="{i18n>storageLoc}" design="Bold" required="true"/>
+						<!--<Input value="{goodsRecieptModel>/LGORT}" maxLength="4" id="storLoc" name="storageLocation" required="true" placeholder="{i18n>storageLoc}"
+							change="onCheckField"></Input>-->
+						<Input name="storageLocation" required="true" maxLength="4" id="storLoc" type="Text" textFormatMode="Key" showValueHelp="true"
+							placeholder="{i18n>storageLoc}" valueHelpRequest="handleValueHelpRequest" suggestionItems="{path: '/GETSTORAGELOCSet'}"
+							value="{goodsRecieptModel>/LGORT}" change="onCheckField">
+							<suggestionItems>
+								<core:ListItem key="{STORAGELOCATION}" text="{DESCRIPTION}"/>
+							</suggestionItems>
+						</Input>
+						<Label text="{i18n>destinationBin}" design="Bold" required="true"/>
+						<!--<Input value="{goodsRecieptModel>/DESTINATIONBIN}" required="true" id="destinBin" name="DestinationBin" placeholder="{i18n>destinationBin}"
+							change="onCheckField" maxLength="10"></Input>-->
+						<Input name="DestinationBin" required="true" maxLength="10" id="destinBin" type="Text" textFormatMode="Key" showValueHelp="true"
+							placeholder="{i18n>destinationBin}" valueHelpRequest="handleValueHelpRequest" suggestionItems="{path: '/GETDESTINBINSet'}"
+							value="{goodsRecieptModel>/DESTINATIONBIN}" change="onCheckField">
+							<suggestionItems>
+								<core:ListItem key="{DESTINATIONBIN}" text="{WERKS}"/>
+							</suggestionItems>
+						</Input>
+						<!--<Label text="{i18n>destinationStorageType}" design="Bold" required="true"/>
+						<Input value="{goodsRecieptModel>/DESTINATIONSTORAGETYPE}" required="true" id="destinStorType" name="DestinationStoreType"
+							placeholder="{i18n>destinationStorageType}" change="onCheckField" maxLength="3"></Input>-->
+						<Label text="{i18n>manufacturingDate}" design="Bold" required="true"/>
+						<DatePicker id="manFactureDate" change="onChangeManufacturingDate" required="true"
+							value="{path:'goodsRecieptModel>/PRODUCTDATE', type:'sap.ui.model.type.Date', formatOptions: { style: 'short'}}" displayFormat="dd.MM.yyyy"
+							valueFormat="dd.MM.yyyy" placeholder=""/>
+					</f:content>
+				</f:SimpleForm>
+			</VBox>
+			<VBox visible="{settingsModel>/visiblePoData}">
+				<Table id="idPoItem" inset="false" alternateRowColors="true" headerText="{i18n>poItem}" noDataText="{i18n>nodata}"
+					items="{poItemData>/results}">
+					<headerToolbar>
+						<OverflowToolbar>
+							<Title text="{i18n>items}" level="H2"/>
+							<ToolbarSpacer/>
+							<Button icon="sap-icon://add" type="Emphasized" press="addLineItem"/>
+						</OverflowToolbar>
+					</headerToolbar>
+					<columns>
+						<Column demandPopin="true">
+							<Label design="Bold" textAlign="Left" text="{i18n>poItem}"/>
+						</Column>
+						<Column demandPopin="true">
+							<Label design="Bold" textAlign="Left" text="{i18n>itemDesc}"/>
+						</Column>
+						<Column demandPopin="true">
+							<Label design="Bold" textAlign="Left" text="{i18n>lotNum}"/>
+						</Column>
+						<Column demandPopin="true" minScreenWidth="Desktop">
+							<Label design="Bold" textAlign="Left" text="{i18n>quanUnit}"/>
+						</Column>
+						<Column demandPopin="true" minScreenWidth="Desktop">
+							<Label design="Bold" textAlign="Left" text="{i18n>plant}"/>
+						</Column>
+						<Column demandPopin="true" minScreenWidth="Desktop">
+							<Label design="Bold" textAlign="Left" text="{i18n>destinationBin}"/>
+						</Column>
+						<Column demandPopin="true" minScreenWidth="Desktop">
+							<Label design="Bold" textAlign="Left" text="{i18n>manufacturingDate}"/>
+						</Column>
+						<Column demandPopin="true" minScreenWidth="Desktop">
+							<Label design="Bold" textAlign="Left" text="{i18n>action}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem >
+							<cells>
+								<Text text="{poItemData>MATNR}"/>
+								<Text text="{poItemData>MAKTX}"/>
+								<Text text="{poItemData>BATCH}"/>
+								<Text text="{poItemData>MENGE}"/>
+								<Text text="{poItemData>WERKS}"/>
+								<Text text="{poItemData>DESTINATIONBIN}"/>
+								<Text text="{path:'poItemData>PRODUCTDATE', type:'sap.ui.model.type.Date', formatOptions: { style: 'short'}}"/>
+								<!--<CheckBox selected="{= ${poItemData>MvtIndicatoor} === 'X'? true:false}" enabled="false"/>-->
+								<Button icon="sap-icon://delete" type="Reject" press="onDeleteLineItem" enabled="{settingsModel>/enableDeleteLineItem}"
+									tooltip="{i18n>delete}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</VBox>
+		</content>
+		<footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button text="{i18n>post}" tooltip="{i18n>post}" press="onPressPost" icon="sap-icon://post" type="Emphasized"
+					enabled="{settingsModel>/enablePost}"/>
+			</OverflowToolbar>
+		</footer>
+	</Page>
+</mvc:View>

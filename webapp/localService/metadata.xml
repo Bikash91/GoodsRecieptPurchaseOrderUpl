@@ -1,0 +1,93 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:sap="http://www.sap.com/Protocols/SAPData"
+	xmlns:ux="http://www.sap.com/Protocols/OData4SAP/UX" xmlns:gp="http://www.sap.com/Protocols/SAPData/GenericPlayer" Version="1.0">
+	<edmx:DataServices xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="2.0">
+		<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZWMS_UPL_SRV" sap:schema-version="1" xml:lang="en">
+			<EntityType Name="BINITEM" sap:content-version="1">
+				<Key><PropertyRef Name="WHNUMBER"/></Key><Property Name="WHNUMBER" Type="Edm.String" Nullable="false" MaxLength="3" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:label="Warehouse No."/><Property Name="MATERIAL" Type="Edm.String" Nullable="false" MaxLength="18" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:label="Material"/><Property Name="QUANTITY" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false" sap:label="Requested qty"/><Property Name="UNITOFMEASURE" Type="Edm.String" Nullable="false" MaxLength="3" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure" sap:label="AlternativeUnit"/><Property Name="DESTINATIONBIN" Type="Edm.String" Nullable="false" MaxLength="10" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false" sap:label="Destination Bin"/><Property Name="DESTINATIONBINTYPE" Type="Edm.String" Nullable="false" MaxLength="3" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false" sap:label="DestStorType"/><Property Name="SOURCEBIN" Type="Edm.String" Nullable="false" MaxLength="10" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false" sap:label="Source Stor.Bin"/><Property Name="SOURCEBINTYPE" Type="Edm.String" Nullable="false" MaxLength="3" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false" sap:label="Source Stor.Ty."/></EntityType>
+			<EntityType Name="POHEADER" sap:content-version="1">
+				<Key><PropertyRef Name="EBELN"/></Key><Property Name="EBELN" Type="Edm.String" Nullable="false" MaxLength="10" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:label="Purchasing Document"/><NavigationProperty Name="NAVPOHEADERTOITEM" Relationship="ZWMS_UPL_SRV.POHEADERTOITEM" FromRole="FromRole_POHEADERTOITEM"
+					ToRole="ToRole_POHEADERTOITEM"/></EntityType>
+			<EntityType Name="POITEM" sap:content-version="1">
+				<Key><PropertyRef Name="EBELN"/></Key><Property Name="EBELN" Type="Edm.String" Nullable="false" MaxLength="10" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:label="Purchasing Document"/><Property Name="EBELP" Type="Edm.String" Nullable="false" MaxLength="5" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:label="Item"/><Property Name="MATNR" Type="Edm.String" Nullable="false" MaxLength="18" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:label="Material"/><Property Name="MAKTX" Type="Edm.String" Nullable="false" MaxLength="40" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:label="Material Description"/><Property Name="WERKS" Type="Edm.String" Nullable="false" MaxLength="4" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:label="Plant"/><Property Name="LGORT" Type="Edm.String" Nullable="false" MaxLength="4" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:label="Storage Location"/><Property Name="MENGE" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false" sap:label="Order Quantity"/><Property Name="MEINS" Type="Edm.String" Nullable="false" MaxLength="3" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:semantics="unit-of-measure" sap:label="Base Unit of Measure"/></EntityType>
+			<EntityType Name="GRHEADER" sap:content-version="1">
+				<Key><PropertyRef Name="EBELN"/></Key><Property Name="EBELN" Type="Edm.String" Nullable="false" MaxLength="10" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:label="Purchasing Document"/><Property Name="POSTINGDATE" Type="Edm.DateTime" Nullable="false" Precision="0" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false" sap:label="POSTING DATE"/><Property Name="MESSAGE" Type="Edm.String" Nullable="false" MaxLength="100" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="DELIERYNOTE" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><NavigationProperty Name="NAVGRHEADERTOITEM" Relationship="ZWMS_UPL_SRV.GRHEADERTOITEM" FromRole="FromRole_GRHEADERTOITEM"
+					ToRole="ToRole_GRHEADERTOITEM"/></EntityType>
+			<EntityType Name="GRITEM" sap:content-version="1">
+				<Key><PropertyRef Name="EBELN"/></Key><Property Name="EBELN" Type="Edm.String" Nullable="false" MaxLength="10" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="MATNR" Type="Edm.String" Nullable="false" MaxLength="18" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="MOVTYPE" Type="Edm.String" Nullable="false" MaxLength="3" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:label="Movement Type"/><Property Name="LGORT" Type="Edm.String" Nullable="false" MaxLength="4" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:label="Stor. Location"/><Property Name="WERKS" Type="Edm.String" Nullable="false" MaxLength="4" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:label="Plant"/><Property Name="EBELP" Type="Edm.String" Nullable="false" MaxLength="5" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="MENGE" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false" sap:label="Quantity"/><Property Name="BATCH" Type="Edm.String" Nullable="false" MaxLength="10" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="MEINS" Type="Edm.String" Nullable="false" MaxLength="3" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="PRODUCTDATE" Type="Edm.DateTime" Nullable="false" Precision="0" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false" sap:label="Time Stamp"/><Property Name="MAKTX" Type="Edm.String" Nullable="false" MaxLength="40" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:label="Description"/><Property Name="DESTINATIONBIN" Type="Edm.String" Nullable="false" MaxLength="10" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/><Property Name="DESTINATIONSTORAGETYPE" Type="Edm.String" Nullable="false" MaxLength="3" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/><Property Name="DOCDATE" Type="Edm.DateTime" Nullable="true" Precision="0" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:label="SLED/BBD"/></EntityType>
+			<EntityType Name="BINHEADER" sap:content-version="1">
+				<Key><PropertyRef Name="WHNUMBER"/></Key><Property Name="WHNUMBER" Type="Edm.String" Nullable="false" MaxLength="3" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:label="Warehouse No."/><Property Name="PLANT" Type="Edm.String" Nullable="false" MaxLength="4" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:label="Plant"/><Property Name="STORAGELOCATION" Type="Edm.String" Nullable="false" MaxLength="4" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false" sap:label="Stor. Location"/><Property Name="MOVEMENTTYPE" Type="Edm.String" Nullable="false" MaxLength="3" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false" sap:label="Movement Type"/><Property Name="TONUMBER" Type="Edm.String" Nullable="false" MaxLength="10" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false" sap:label="TO Number"/><Property Name="MESSAGE" Type="Edm.String" Nullable="false" MaxLength="50" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><NavigationProperty Name="NAVBINHEADERTOITEM" Relationship="ZWMS_UPL_SRV.BINHEADERTOITEM" FromRole="FromRole_BINHEADERTOITEM"
+					ToRole="ToRole_BINHEADERTOITEM"/></EntityType>
+			<Association Name="GRHEADERTOITEM" sap:content-version="1"><End Type="ZWMS_UPL_SRV.GRHEADER" Multiplicity="0..1" Role="FromRole_GRHEADERTOITEM"/><End Type="ZWMS_UPL_SRV.GRITEM" Multiplicity="*" Role="ToRole_GRHEADERTOITEM"/>
+				<ReferentialConstraint>
+					<Principal Role="FromRole_GRHEADERTOITEM"><PropertyRef Name="EBELN"/></Principal>
+					<Dependent Role="ToRole_GRHEADERTOITEM"><PropertyRef Name="EBELN"/></Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<Association Name="POHEADERTOITEM" sap:content-version="1"><End Type="ZWMS_UPL_SRV.POHEADER" Multiplicity="0..1" Role="FromRole_POHEADERTOITEM"/><End Type="ZWMS_UPL_SRV.POITEM" Multiplicity="*" Role="ToRole_POHEADERTOITEM"/>
+				<ReferentialConstraint>
+					<Principal Role="FromRole_POHEADERTOITEM"><PropertyRef Name="EBELN"/></Principal>
+					<Dependent Role="ToRole_POHEADERTOITEM"><PropertyRef Name="EBELN"/></Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<Association Name="BINHEADERTOITEM" sap:content-version="1"><End Type="ZWMS_UPL_SRV.BINHEADER" Multiplicity="1" Role="FromRole_BINHEADERTOITEM"/><End Type="ZWMS_UPL_SRV.BINITEM" Multiplicity="*" Role="ToRole_BINHEADERTOITEM"/>
+				<ReferentialConstraint>
+					<Principal Role="FromRole_BINHEADERTOITEM"><PropertyRef Name="WHNUMBER"/></Principal>
+					<Dependent Role="ToRole_BINHEADERTOITEM"><PropertyRef Name="WHNUMBER"/></Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<EntityContainer Name="ZWMS_UPL_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx"><EntitySet Name="BINITEMSet" EntityType="ZWMS_UPL_SRV.BINITEM" sap:content-version="1" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:addressable="false"/><EntitySet Name="POHEADERSet" EntityType="ZWMS_UPL_SRV.POHEADER" sap:content-version="1" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:addressable="false"/><EntitySet Name="POITEMSet" EntityType="ZWMS_UPL_SRV.POITEM" sap:content-version="1" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:addressable="false"/><EntitySet Name="GRHEADERSet" EntityType="ZWMS_UPL_SRV.GRHEADER" sap:content-version="1" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:addressable="false"/><EntitySet Name="GRITEMSet" EntityType="ZWMS_UPL_SRV.GRITEM" sap:content-version="1" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:addressable="false"/><EntitySet Name="BINHEADERSet" EntityType="ZWMS_UPL_SRV.BINHEADER" sap:content-version="1" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:addressable="false"/>
+				<AssociationSet Name="GRHEADERTOITEMSet" Association="ZWMS_UPL_SRV.GRHEADERTOITEM" deletable="false" creatable="false" updatable="false"><End EntitySet="GRHEADERSet" Role="FromRole_GRHEADERTOITEM"/><End EntitySet="GRITEMSet" Role="ToRole_GRHEADERTOITEM"/></AssociationSet>
+				<AssociationSet Name="POHEADERTOITEMSet" Association="ZWMS_UPL_SRV.POHEADERTOITEM" deletable="false" creatable="false" updatable="false"><End EntitySet="POHEADERSet" Role="FromRole_POHEADERTOITEM"/><End EntitySet="POITEMSet" Role="ToRole_POHEADERTOITEM"/></AssociationSet>
+				<AssociationSet Name="BINHEADERTOITEMSet" Association="ZWMS_UPL_SRV.BINHEADERTOITEM" deletable="false" creatable="false" updatable="false"><End EntitySet="BINHEADERSet" Role="FromRole_BINHEADERTOITEM"/><End EntitySet="BINITEMSet" Role="ToRole_BINHEADERTOITEM"/></AssociationSet>
+			</EntityContainer><atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self"
+				href="https://gwaas-ae7888026.hana.ondemand.com:443/odata/SAP/ZWMS_UPL_SRV/$metadata"/><atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version"
+				href="https://gwaas-ae7888026.hana.ondemand.com:443/odata/SAP/ZWMS_UPL_SRV/$metadata"/></Schema>
+	</edmx:DataServices>
+</edmx:Edmx>
